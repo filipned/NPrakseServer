@@ -101,6 +101,14 @@ class ClientThread extends Thread {
                             AbstractObject kompanijaZaIzmjenu = Controler.getInstance().azurirajKompaniju((AbstractObject)clr.getObject());
                             ser.setPodaci(kompanijaZaIzmjenu);
                             break;
+                        case Operations.SACUVAJ_PRAKSU:
+                            AbstractObject praksa = Controler.getInstance().sacuvajPraksu((AbstractObject) clr.getObject());
+                            ser.setPodaci(praksa);
+                            break;
+                        case Operations.UCITAJ_SVE_PRAKSE:
+                            List<AbstractObject> prakse = (List<AbstractObject>)Controler.getInstance().ucitajSvePrakse();
+                            ser.setPodaci(prakse);
+                            break;
                         default:
                                 ser.getPodaci();
                                 break;

@@ -144,6 +144,30 @@ public class DatabaseBroker {
             throw new ServerException(ex.getMessage());
         }
     }
+    public List<Integer> vratiObjektePoKljucu(AbstractObject o, String imeTabele, String kolona, int ID) throws ServerException {
+        String upit;
+        if (o.vratiPK() != null) {
+            upit = "SELECT "+ kolona +" FROM " + imeTabele +  " WHERE " + o.vratiPK() + "=" + ID;
+        } else {
+            upit = "SELECT * FROM " + imeTabele + " WHERE " + o.vratiSlozenPK();
+        }
+        try (Statement s = connection.createStatement();) {
+            ResultSet rs = s.executeQuery(upit);
+            List<Integer> listaKljuceva = new ArrayList<>();
+            
+            while(rs.next()) {
+                int i = rs.getInt("bransaID");
+                listaKljuceva.add(i);
+            }
+             
+            s.close();
+            System.out.println("Uspesno izvrsen mini SELECT");
+            return listaKljuceva;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseBroker.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ServerException(ex.getMessage());
+        }
+    }
     
     public AbstractObject obrisiObjekat(AbstractObject o) throws ServerException {
         try {

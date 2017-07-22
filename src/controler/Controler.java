@@ -15,9 +15,11 @@ import so.SOObrisiKompaniju;
 import so.SOObrisiStudenta;
 import so.SOSacuvajStudenta;
 import so.SOSacuvajKompaniju;
+import so.SOSacuvajPraksu;
 import so.SOUcitajSveBranse;
 import so.SOUcitajSveFakultete;
 import so.SOUcitajSveKompanije;
+import so.SOUcitajSvePrakse;
 import so.SOUcitajSveStudente;
 import so.SOUlogujZaposlenog;
 
@@ -103,5 +105,17 @@ public class Controler {
         SOAzurirajKompaniju so = new SOAzurirajKompaniju(kompanija);
         so.izvrsiOperaciju();
         return so.getKompanijaZaIzmjenu();
+    }
+
+    public AbstractObject sacuvajPraksu(AbstractObject praksa) throws ServerException {
+        SOSacuvajPraksu so = new SOSacuvajPraksu(praksa);
+        so.izvrsiOperaciju();
+        return so.getPraksa();
+    }
+    
+    public List<AbstractObject> ucitajSvePrakse() throws ServerException {
+        SOUcitajSvePrakse so = new SOUcitajSvePrakse();
+        so.izvrsiOperaciju();
+        return (List<AbstractObject>) so.getPrakse();
     }
 }
