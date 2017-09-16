@@ -5,6 +5,10 @@
  */
 package form;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import server.Server;
 
 /**
@@ -13,6 +17,8 @@ import server.Server;
  */
 public class ServerForm extends javax.swing.JFrame {
 
+     Server server;
+     private static volatile ServerSocket serverSocket;
     /**
      * Creates new form ServerForm
      */
@@ -30,6 +36,9 @@ public class ServerForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabelStatus = new javax.swing.JLabel();
+        jButtonZaustavi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,21 +49,46 @@ public class ServerForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Status:");
+
+        jLabelStatus.setText("Server zaustavljen..");
+
+        jButtonZaustavi.setText("Zaustavi server");
+        jButtonZaustavi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonZaustaviActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jButton1)
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelStatus))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonZaustavi)))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jButton1)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButtonZaustavi))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelStatus))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
 
         pack();
@@ -62,9 +96,17 @@ public class ServerForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Server server = new Server();
+        server = new Server(this);
         server.start();
+        jLabelStatus.setText("Server pokrenut");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonZaustaviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZaustaviActionPerformed
+         
+             // TODO add your handling code here:
+             server.zaustaviNiti();
+             jLabelStatus.setText("ne radi");
+    }//GEN-LAST:event_jButtonZaustaviActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,5 +145,11 @@ public class ServerForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonZaustavi;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelStatus;
     // End of variables declaration//GEN-END:variables
+
+    
+    
 }

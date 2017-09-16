@@ -130,6 +130,12 @@ class ClientThread extends Thread {
             }
         }
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    
     
     
     
